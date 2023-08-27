@@ -18,8 +18,8 @@ model Profile {
   imageUrl String @db.Text
   email String @db.Text
 
-  server Server[]
-  member Member[]
+  servers Server[]
+  members Member[]
   channels Channel[]
 
   createdAt DateTime @default(now())
@@ -34,18 +34,16 @@ model Server {
   inviteCode String @db.Text
 
   
+  profileId String
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
-
-  proifeId String
-  profile Profile @relation(fields: [proifeId], references: [id], onDelete: Cascade)
-
-  member Member[]
+  members Member[]
   channels Channel[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([proifeId])
+  @@index([profileId])
 }
 
 enum MemberRole {

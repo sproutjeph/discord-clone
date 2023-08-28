@@ -23,6 +23,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import FileUpload from "../base-ui/file-upload";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface initialModalProps {}
 
@@ -37,6 +39,7 @@ const formSchema = z.object({
 });
 
 const InitialModal: FC<initialModalProps> = ({}) => {
+  const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -54,6 +57,15 @@ const InitialModal: FC<initialModalProps> = ({}) => {
   const isLoading = form.formState.isLoading;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await axios.post("/api/servers", values);
+
+      form.reset();
+      router.refresh();
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
     console.log(values);
   };
 

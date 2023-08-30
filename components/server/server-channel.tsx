@@ -62,13 +62,19 @@ export const ServerChannel = ({
         <div className="flex items-center ml-auto gap-x-2">
           <ActionTooltip label="Edit">
             <Edit
-              onClick={(e) => {}}
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpen("editChannel", { server, channel });
+              }}
               className="hidden w-4 h-4 transition group-hover:block text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300"
             />
           </ActionTooltip>
           <ActionTooltip label="Delete">
             <Trash
-              onClick={(e) => {}}
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpen("deleteChannel", { server, channel });
+              }}
               className="hidden w-4 h-4 transition group-hover:block text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300"
             />
           </ActionTooltip>

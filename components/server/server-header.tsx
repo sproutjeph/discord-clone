@@ -80,7 +80,7 @@ const ServerHeader: FC<ServerHeaderProps> = ({ server, role }) => {
         {isModerator && <DropdownMenuSeparator />}
         {isAdmin && (
           <DropdownMenuItem
-            onClick={() => {}}
+            onClick={() => onOpen("deleteServer", { server })}
             className="px-3 py-2 text-sm cursor-pointer text-rose-500"
           >
             Delete Server
@@ -89,7 +89,7 @@ const ServerHeader: FC<ServerHeaderProps> = ({ server, role }) => {
         )}
         {!isAdmin && (
           <DropdownMenuItem
-            onClick={() => {}}
+            onClick={() => onOpen("leaveServer", { server })}
             className="px-3 py-2 text-sm cursor-pointer text-rose-500"
           >
             Leave Server

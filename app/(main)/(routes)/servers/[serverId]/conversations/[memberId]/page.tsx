@@ -1,5 +1,7 @@
+import { MediaRoom } from "@/components/base-ui/media-room";
 import { ChatHeader } from "@/components/chat/chat-header";
 import { ChatInput } from "@/components/chat/chat-input";
+import { ChatMessages } from "@/components/chat/chat-messages";
 import { getOrCreateConversation } from "@/lib/conversation";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -62,7 +64,7 @@ const MemberIdpage: FC<MemberIdpageProps> = async ({
         serverId={params.serverId}
         type="conversation"
       />
-      {/* {searchParams.video && (
+      {searchParams.video && (
         <MediaRoom chatId={conversation.id} video={true} audio={true} />
       )}
       {!searchParams.video && (
@@ -89,7 +91,7 @@ const MemberIdpage: FC<MemberIdpageProps> = async ({
             }}
           />
         </>
-      )} */}
+      )}
     </div>
   );
 };

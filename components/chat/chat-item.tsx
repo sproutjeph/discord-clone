@@ -239,7 +239,7 @@ export const ChatItem = ({
           )}
           <ActionTooltip label="Delete">
             <Trash
-              onClick={() => {}}
+              onClick={() => onOpen("deleteMessage")}
               className="w-4 h-4 ml-auto transition cursor-pointer text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300"
             />
           </ActionTooltip>

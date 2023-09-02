@@ -16,9 +16,9 @@ const DATE_FORMAT = "d MMM yyyy, HH:mm";
 
 type MessageWithMemberWithProfile = Message & {
   member: Member & {
-    profile: Profile
-  }
-}
+    profile: Profile;
+  };
+};
 
 interface ChatMessagesProps {
   name: string;
@@ -45,23 +45,18 @@ export const ChatMessages = ({
 }: ChatMessagesProps) => {
   const queryKey = `chat:${chatId}`;
   const addKey = `chat:${chatId}:messages`;
-  const updateKey = `chat:${chatId}:messages:update` 
+  const updateKey = `chat:${chatId}:messages:update`;
 
   const chatRef = useRef<ElementRef<"div">>(null);
   const bottomRef = useRef<ElementRef<"div">>(null);
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    status,
-  } = useChatQuery({
-    queryKey,
-    apiUrl,
-    paramKey,
-    paramValue,
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+    useChatQuery({
+      queryKey,
+      apiUrl,
+      paramKey,
+      paramValue,
+    });
   useChatSocket({ queryKey, addKey, updateKey });
   useChatScroll({
     chatRef,
@@ -69,47 +64,42 @@ export const ChatMessages = ({
     loadMore: fetchNextPage,
     shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
     count: data?.pages?.[0]?.items?.length ?? 0,
-  })
+  });
 
   if (status === "loading") {
     return (
-      <div className="flex flex-col flex-1 justify-center items-center">
-        <Loader2 className="h-7 w-7 text-zinc-500 animate-spin my-4" />
+      <div className="flex flex-col items-center justify-center flex-1">
+        <Loader2 className="my-4 h-7 w-7 text-zinc-500 animate-spin" />
         <p className="text-xs text-zinc-500 dark:text-zinc-400">
           Loading messages...
         </p>
       </div>
-    )
+    );
   }
 
   if (status === "error") {
     return (
-      <div className="flex flex-col flex-1 justify-center items-center">
-        <ServerCrash className="h-7 w-7 text-zinc-500 my-4" />
+      <div className="flex flex-col items-center justify-center flex-1">
+        <ServerCrash className="my-4 h-7 w-7 text-zinc-500" />
         <p className="text-xs text-zinc-500 dark:text-zinc-400">
           Something went wrong!
         </p>
       </div>
-    )
+    );
   }
 
   return (
-    <div ref={chatRef} className="flex-1 flex flex-col py-4 overflow-y-auto">
+    <div ref={chatRef} className="flex flex-col flex-1 py-4 overflow-y-auto">
       {!hasNextPage && <div className="flex-1" />}
-      {!hasNextPage && (
-        <ChatWelcome
-          type={type}
-          name={name}
-        />
-      )}
+      {!hasNextPage && <ChatWelcome type={type} name={name} />}
       {hasNextPage && (
         <div className="flex justify-center">
           {isFetchingNextPage ? (
-            <Loader2 className="h-6 w-6 text-zinc-500 animate-spin my-4" />
+            <Loader2 className="w-6 h-6 my-4 text-zinc-500 animate-spin" />
           ) : (
             <button
               onClick={() => fetchNextPage()}
-              className="text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 text-xs my-4 dark:hover:text-zinc-300 transition"
+              className="my-4 text-xs transition text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300"
             >
               Load previous messages
             </button>
@@ -119,7 +109,7 @@ export const ChatMessages = ({
       <div className="flex flex-col-reverse mt-auto">
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
-            {group.items.map((message: MessageWithMemberWithProfile) => (
+            {group?.items.map((message: MessageWithMemberWithProfile) => (
               <ChatItem
                 key={message.id}
                 id={message.id}
@@ -139,5 +129,5 @@ export const ChatMessages = ({
       </div>
       <div ref={bottomRef} />
     </div>
-  )
-}
+  );
+};

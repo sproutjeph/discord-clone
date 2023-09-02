@@ -35,10 +35,10 @@ export const ServerChannel = ({
     router.push(`/servers/${params?.serverId}/channels/${channel.id}`);
   };
 
-  // const onAction = (e: React.MouseEvent, action: ModalType) => {
-  //   e.stopPropagation();
-  //   onOpen(action, { channel, server });
-  // }
+  const onAction = (e: React.MouseEvent, action: ModalType) => {
+    e.stopPropagation();
+    onOpen(action, { channel, server });
+  };
 
   return (
     <button
@@ -62,19 +62,13 @@ export const ServerChannel = ({
         <div className="flex items-center ml-auto gap-x-2">
           <ActionTooltip label="Edit">
             <Edit
-              onClick={(e) => {
-                e.stopPropagation();
-                onOpen("editChannel", { server, channel });
-              }}
+              onClick={(e) => onAction(e, "editChannel")}
               className="hidden w-4 h-4 transition group-hover:block text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300"
             />
           </ActionTooltip>
           <ActionTooltip label="Delete">
             <Trash
-              onClick={(e) => {
-                e.stopPropagation();
-                onOpen("deleteChannel", { server, channel });
-              }}
+              onClick={(e) => onAction(e, "deleteChannel")}
               className="hidden w-4 h-4 transition group-hover:block text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300"
             />
           </ActionTooltip>

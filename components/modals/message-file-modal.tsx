@@ -31,7 +31,7 @@ export const MessageFileModal = () => {
   const router = useRouter();
 
   const isModalOpen = isOpen && type === "messageFile";
-  const { apiUrl, query } = data as any;
+  const { apiUrl, query } = data;
 
   const form = useForm({
     resolver: zodResolver(formSchema),
